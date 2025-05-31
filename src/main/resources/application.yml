@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: bookstore
+  mvc:
+    produces: application/json
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+  config:
+    import: application-email.yml,application-web.yml,application-dal.yml
+  elasticsearch:
+    uris: http://localhost:9200
+    username: elastic
+    password: GDragon@0223
+  datasource:
+    url: jdbc:mysql://localhost:3306/bookstore?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: GDragon@0223
+    driver-class-name: com.mysql.cj.jdbc.Driver
+jwt:
+  issuer: bookstore # 签发者
+  secret: theBestBookStore # 签名密匙
+  expiration: 86400000 # jwt的有效期，默认1天
+message:
+  accessKey: ${ALI_SMS_ACCESS_KEY}
+  accessKeySecret: ${ALI_SMS_ACCESS_KEY_SECRET}
+  endpoint: dysmsapi.aliyuncs.com
+  signName: 网上图书销售系统
+  template:
+    register: SMS_475975572
+    login: SMS_475870565
+    password: SMS_481055105
+mybatis-plus:
+  configuration:
+    use-actual-param-name: true
+security:
+  salt: tech_bookstore
+  salt-index: 3
+oss:
+  book:
+    bucket:
+      name: bookstore-book-image
+      region: cn-nanjing
+
+alipay:
+  appId: 9021000145680633
+  appPrivateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxh1fiSNtoLTV0/RyqFA//L5awIvxjbLkON5wTuztZCst2YL22L1bbCb/qrO8ogcUWNiF5Xlquvse9RIbC+gM9UplaixRfxilFxXd7B65YCXEWzbnsBlp8IfCZSOR8XK4miDlxeCLBPGhB5p8Ov6CDu+OB9AZFXjZtRhpdia8D3YbKEABFt4agL4Po7OsZuitXYET/j6WtcgN6MMVxHJsHfG8eyvl+d4EH+GzkvoTnKbbBzJJj/RSVz+gt+g3aP/pBYHQLZNjxiQthwKu2Xv8glu3kI9ISPhTP1a8J3hEUQ0ngCNvoHxNQ2IzjjIhYRIVhj+SufQWUPSz6mL3XoGkJAgMBAAECggEAXKGWRchmU5FjV0vK7SPSxQB7zCQ1NVvBo514nwMPEIMFbxtDYhCJbXlE3pqln6k2wUQ1azLEdnGtnyBmgM4bap/yzL/NPbwURQeoNFXprp4emBt4a6NVC3haJmFWd12UsR5bes2ItPNkIx7G19c9Vf9v0psVupRSKepuT2hMHeNWukna7FvE+fNrL5vvzuNmiBPA1iuNxMpayLRucisKBsFhVXs6Iftf7X+cEcdNYzcbA4lyMs8pV88dx4KsHyAajqs7XGkA3hMF5uo8IPgTll3JY0TUSHniwolyyQEmrFrOQYE0Tio3STX7IiF2/1f89M5rBtuB87hdpLZEuXJlQQKBgQDW7M7afTgLV49CNNYEmO8Y72Tgta/othVBRK9Xh93lqCv9WWo9meCAg3CM3bMWIekDvkvZOytHG9QleIi9AlQrhIsCrMOB4D3UrPWA2HYvEYo2xtWeZX7pBFi9jKXMe4Fs61F5MZu4kwuMs9aSNcbL0/vZswC7MxyRLdobyymPbQKBgQDTdOvx5t88WzgKGlQNcL+m96QgB4r22O/xDNDwkl0C6p93+mgDc9Xm99KTgfGYrLlcbD9AHqhyioojJFsKGY8Vzm2UDHVXX7h7twnZe3La6RlamzzWS+NpB38PPHL+GEg09kcMWzEdVBXauWxodXJImC76zXDnxranJBCkREnSjQKBgEgA5fwE33XNS81ebiT0J4YvDZjKxbgs6EoJfMTSW+DIypQCFLm2h6QGZPqMe6b6jVoXssmALSuRgy1aiFTqJtC9guTOhGFKguxxVX5pBo8WTTu0uXRrhG0Ea8Z1DEbJSb73xz/XAth/SutEhKpPId6/kiyI78HHidaJifytv6qxAoGADQ302xRTx9gh143UjpfdXSOAwHF2xNKTzZ/q7k866sktWyzcawoltIKsP2sQTUqsjuYn6X97Csc+y/icnj0BtmjuHuu9+szwCMM+Gm0ipB0r8YoP8XLx8TQDRh+HQeSh4JMrw7mFiLf+OWilJrXJfm3WyKkSRVzhPeReGqYUoKkCgYEAuvp34TrTTWOyBzHwMGHwWZgT+bKSdvKaS5j95Dit4iRQoMfdC3/Rr5Q5QRjgyG33v8aYrhkGmy1CJJn927KSlaVjHiBhRDklBlJRCNpPNcupNG0KuUlKXiYwD5JEoYyKhNwx5AcMWa1nmiWa0Y4xROjTDseQSP1xSq2OBzaeF1M=
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAip5WTkYRou5Vf8wpd+cFB3EJUMtWSzVjqKb+Axr39ORhrwMBUAekhmBM4zmWL0RTN909f+8PJB+37IB/ZwkeAVDXgP9mxvV2F+p9EQ6kLClcYMLlHC9pxgRZFhEGK7yJn0jPtZSRSQLxN02T7jVECj8VqA67A0UXrpeqAB7kzWItBWO1bhEaWkm9nyPVXbJRmMS0K03TqIVFxoyhVtMRMbkY12RrYo6JcFv8l3cLweM2JdnBvjN7ATXzc9HaZJw4G6qnKxaUixlrO978bcsCZnqAhltkp7esP77HeDNjlAr3AWboxMhK3KFVfiKhfyc5MYhFlmcX0s6FWrgZSsC85wIDAQAB
+  notifyUrl: http://c25f6f48.natappfree.cc/alipay/pay/notify
+  refundNotifyUrl: http://c25f6f48.natappfree.cc/alipay/refund/notify

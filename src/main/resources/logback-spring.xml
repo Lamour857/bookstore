@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+configuration 有三个属性：
+scan：当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。
+scanPeriod：设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒当scan为true时，此属性生效。默认的时间间隔为1分钟。
+debug：当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。
+-->
+<!--<configuration>-->
+<!--    <include resource="org/springframework/boot/logging/logback/defaults.xml" />-->
+<!--    &lt;!&ndash; 定义日志文件名称 &ndash;&gt;-->
+<!--    <springProperty scope="context" name="log.path" source="log.path" defaultValue="logs/"/>-->
+<!--    <springProperty scope="context" name="log.env" source="env.name" defaultValue="NO"/>-->
+<!--    <property name="log.service.name" value="bookstore" />-->
+<!--    <property name="log.req.name" value="req"/>-->
+<!--    &lt;!&ndash;ConsoleAppender输出到控制台  &ndash;&gt;-->
+<!--    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder>-->
+<!--            <pattern>%d [%t] %-5level|%mdc{traceId}|%mdc{bizCode}|%logger{36}.%M\(%file:%line\) - %msg%n%ex{full}</pattern>-->
+<!--            <charset>UTF-8</charset>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+<!--    &lt;!&ndash;自定义异常输出, 邮件报警  &ndash;&gt;-->
+<!--    <appender name="errorAlarm" class="com.wj.bookstore.common.utils.AlarmUtil">-->
+<!--        &lt;!&ndash;异常预警只过滤ERROR级别的日志&ndash;&gt;-->
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--            <level>ERROR</level>-->
+<!--        </filter>-->
+<!--    </appender>-->
+<!--    &lt;!&ndash;滚动记录文件&ndash;&gt;-->
+<!--    <appender name="service" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--            <level>INFO</level>-->
+<!--        </filter>-->
+<!--        <File>${log.path}/${log.service.name}-${log.env}.log</File>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            &lt;!&ndash;归档文件名&ndash;&gt;-->
+<!--            <fileNamePattern>${log.path}/arch/${log.service.name}-${log.env}.%d.%i.log</fileNamePattern>-->
+<!--            &lt;!&ndash;日志文件保存期限, 3天&ndash;&gt;-->
+<!--            <maxHistory>3</maxHistory>-->
+<!--            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+<!--                <maxFileSize>100MB</maxFileSize>-->
+<!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder>-->
+<!--            &lt;!&ndash;日志输入格式&ndash;&gt;-->
+<!--            <pattern>-->
+<!--                [%d{yyyy-MM-dd HH:mm:ss}]|%mdc{traceId}|%mdc{bizCode}|{"logger":"%logger{36}", "thread":"%thread", "msg":"%msg"}%n%ex{full}-->
+<!--            </pattern>-->
+<!--            <charset>UTF-8</charset>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+<!--    &lt;!&ndash;请求日志&ndash;&gt;-->
+<!--    <appender name="reqLog" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <File>${log.path}/${log.req.name}-${log.env}.log</File>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--            <FileNamePattern>${log.path}/arch/req/req.%d{yyy-MM-dd}.%i.log.gz</FileNamePattern>-->
+<!--            <maxHistory>10</maxHistory>-->
+<!--            <maxFileSize>100MB</maxFileSize>-->
+<!--            &lt;!&ndash;超过1GB删除旧日志&ndash;&gt;-->
+<!--            <totalSizeCap>1GB</totalSizeCap>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder>-->
+<!--            <charset>UTF-8</charset>-->
+<!--            <pattern>[%d{yyyy-MM-dd HH:mm:ss}|%mdc{traceId}|] - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+<!--    <logger name="req" level="info" additivity="false">-->
+<!--        <appender-ref ref="reqLog"/>-->
+<!--    </logger>-->
+<!--    <logger name="springfox.documentation.spring" level="warn" additivity="false">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--        <appender-ref ref="service"/>-->
+<!--    </logger>-->
+<!--    <logger name="com.wj.bookstore" level="INFO" additivity="false">-->
+<!--        <appender-ref ref="service"/>-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--        <appender-ref ref="errorAlarm"/>-->
+<!--    </logger>-->
+
+<!--    <root level="INFO">-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--        <appender-ref ref="service" />-->
+<!--    </root>-->
+<!--</configuration>-->
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <!-- 定义日志文件名称 -->
+    <springProperty scope="context" name="log.path" source="log.path" defaultValue="logs/"/>
+    <springProperty scope="context" name="log.env" source="env.name" defaultValue="NO"/>
+    <property name="log.service.name" value="bookstore" />
+    <property name="log.req.name" value="req"/>
+    <!--ConsoleAppender输出到控制台  -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d [%t] %-5level|%mdc{traceId}|%mdc{bizCode}|%logger{36}.%M\(%file:%line\) - %msg%n%ex{full}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!--自定义异常输出, 邮件报警  -->
+    <appender name="errorAlarm" class="com.wj.bookstore.common.utils.AlarmUtil">
+        <!--异常预警只过滤ERROR级别的日志-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+    <!--滚动记录文件-->
+    <appender name="service" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <File>${log.path}/${log.service.name}-${log.env}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--归档文件名-->
+            <fileNamePattern>${log.path}/arch/${log.service.name}-${log.env}.%d.%i.log</fileNamePattern>
+            <!--日志文件保存期限, 3天-->
+            <maxHistory>3</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <!--日志输入格式-->
+            <pattern>
+                [%d{yyyy-MM-dd HH:mm:ss}]|%mdc{traceId}|%mdc{bizCode}|{"logger":"%logger{36}", "thread":"%thread", "msg":"%msg", "stacktrace":"%ex{full}"}%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!--请求日志-->
+    <appender name="reqLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.path}/${log.req.name}-${log.env}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${log.path}/arch/req/req.%d{yyy-MM-dd}.%i.log.gz</FileNamePattern>
+            <maxHistory>10</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <!--超过1GB删除旧日志-->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}|%mdc{traceId}|] - %msg%n%ex{full}</pattern>
+        </encoder>
+    </appender>
+    <logger name="req" level="info" additivity="false">
+        <appender-ref ref="reqLog"/>
+    </logger>
+    <logger name="springfox.documentation.spring" level="warn" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="service"/>
+    </logger>
+    <logger name="com.wj.bookstore" level="INFO" additivity="false">
+        <appender-ref ref="service"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="errorAlarm"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="service" />
+    </root>
+</configuration>

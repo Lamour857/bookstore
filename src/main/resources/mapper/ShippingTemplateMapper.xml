@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wj.bookstore.delivery.template.repository.mapper.ShippingTemplateMapper">
+
+    <!-- ShippingTemplateDO 的 resultMap -->
+    <resultMap id="ShippingTemplateResultMap" type="com.wj.bookstore.delivery.template.entity.DO.ShippingTemplateDO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="deliveryPlaceId" column="delivery_place_id"/>
+        <result property="pricingMethod" column="pricing_method"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="deliveryInstruction" column="delivery_instruction"/>
+        <result property="createTime" column="st_create_time"/>
+        <result property="updateTime" column="st_update_time"/>
+        <collection property="entries"  resultMap="BaseTemplateEntryResultMap" column="{base_entry_id=entry_id}"/>
+    </resultMap>
+
+    <!-- BaseTemplateItemResultMap（父类映射） -->
+    <resultMap id="BaseTemplateEntryResultMap" type="com.wj.bookstore.delivery.template.entity.DO.BaseTemplateEntryDO">
+        <id property="id" column="base_entry_id"/>
+        <result property="type" column="entry_type"/>
+        <result property="mainRegion" column="main_region"/>
+        <result property="createTime" column="bte_create_time"/>
+        <result property="updateTime" column="bte_update_time"/>
+        <collection property="regions"  resultMap="AreaResultMap">
+            <association property="entry_id" column="id"/>
+        </collection>
+        <discriminator javaType="String" column="entry_type">
+            <case value="fixed" resultMap="FixedTemplateEntryResultMap"/>
+            <case value="piece" resultMap="PieceTemplateEntryResultMap"/>
+            <case value="weight" resultMap="WeightTemplateEntryResultMap"/>
+        </discriminator>
+    </resultMap>
+
+    <!--  子类ResultMap : FixedTemplateEntryDO -->
+    <resultMap id="FixedTemplateEntryResultMap" type="com.wj.bookstore.delivery.template.entity.DO.FixedTemplateEntryDO">
+        <id property="id" column="base_entry_id"/>
+        <result property="type" column="entry_type"/>
+        <result property="mainRegion" column="main_region"/>
+        <result property="createTime" column="bte_create_time"/>
+        <result property="updateTime" column="bte_update_time"/>
+        <result property="fixedAmount" column="fixed_amount"/>
+        <collection property="regions"  resultMap="AreaResultMap">
+            <association property="entry_id" column="id"/>
+        </collection>
+
+    </resultMap>
+
+    <!--  子类ResultMap : PieceTemplateEntryDO -->
+    <resultMap id="PieceTemplateEntryResultMap" type="com.wj.bookstore.delivery.template.entity.DO.PieceTemplateEntryDO">
+        <id property="id" column="base_entry_id"/>
+        <result property="type" column="entry_type"/>
+        <result property="mainRegion" column="main_region"/>
+        <result property="createTime" column="bte_create_time"/>
+        <result property="updateTime" column="bte_update_time"/>
+        <result property="initial" column="p_initial"/>
+        <result property="additional" column="p_additional"/>
+        <result property="initialCost" column="p_initial_cost"/>
+        <result property="additionalCost" column="p_additional_cost"/>
+        <collection property="regions"  resultMap="AreaResultMap">
+            <association property="entry_id" column="id"/>
+        </collection>
+
+    </resultMap>
+
+    <!--  子类ResultMap : WeightTemplateEntryDO -->
+    <resultMap id="WeightTemplateEntryResultMap" type="com.wj.bookstore.delivery.template.entity.DO.WeightTemplateEntryDO">
+        <id property="id" column="base_entry_id"/>
+        <result property="type" column="entry_type"/>
+        <result property="mainRegion" column="main_region"/>
+        <result property="createTime" column="bte_create_time"/>
+        <result property="updateTime" column="bte_update_time"/>
+        <result property="initial" column="w_initial"/>
+        <result property="additional" column="w_additional"/>
+        <result property="initialCost" column="w_initial_cost"/>
+        <result property="additionalCost" column="w_additional_cost"/>
+        <collection property="regions"  resultMap="AreaResultMap">
+            <association property="entry_id" column="id"/>
+        </collection>
+
+
+    </resultMap>
+
+    <!-- AreaDO 的 resultMap -->
+    <resultMap id="AreaResultMap" type="com.wj.bookstore.delivery.template.entity.DO.AreaDO">
+        <id property="id" column="area_id"/>
+        <result property="name" column="area_name"/>
+        <result property="parent" column="parent"/>
+        <result property="level" column="level"/>
+        <result property="type" column="area_type"/>
+    </resultMap>
+
+
+</mapper>

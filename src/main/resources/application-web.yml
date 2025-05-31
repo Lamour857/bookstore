@@ -1,0 +1,11 @@
+log:
+  path: logs
+env:
+  name: dev
+knife4j:
+  enable: true
+  openapi:
+    title: bookstore-api
+    version: 1.0.0
+    description: bookstore
+    email: 1722699649@qq.com

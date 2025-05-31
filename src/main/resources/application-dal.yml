@@ -1,0 +1,11 @@
+spring:
+  redis:
+    host: localhost
+    port: 6379
+aliyun:
+  oss:
+    accessKeyId: ${ALI_OSS_ACCESS_KEY_ID}
+    accessKeySecret: ${ALI_OSS_ACCESS_KEY_SECRET}
+    region: cn-nanjing
+    endpoint: https://oss-cn-nanjing.aliyuncs.com
+
